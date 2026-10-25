@@ -18,13 +18,18 @@
 
 ## 📌 Overview
 
-OConns is a security and privacy tool from the OwlSec suite.
+OConns shows every network connection on a Linux machine, similar to ss -p or lsof. It reads /proc/net directly, decodes IPv4 and IPv6 sockets, and maps each one to the process that owns it. Its exposure audit flags risky listeners and suspicious outbound connections as graded findings.
 
 ---
 
 ## ✨ Features
 
-- Standalone executable, no Python installation needed.
+- Reads /proc/net/{tcp,tcp6,udp,udp6}: addresses, states, tx/rx queues, UID and inode
+- Maps every socket to its owning process (inode → PID → name)
+- Listeners view, TCP state summary, top remote peers and per-port filter
+- Live monitor with configurable duration and refresh interval
+- Exposure audit: world-reachable listeners, plaintext service ports, rare ephemeral listeners, fan-out and suspicious ports
+- Reports in TXT / JSON / Markdown / CSV / SARIF
 
 ---
 
@@ -38,8 +43,14 @@ OConns is a security and privacy tool from the OwlSec suite.
 ## 🚀 Usage
 
 ```bash
-./OConns
+./OConns                                     # interactive menu
+./OConns --listen
+./OConns --audit
+./OConns --port 443
+./OConns --monitor -t 60 --interval 2
 ```
+
+Run `./OConns --help` for the full list of options.
 
 ---
 
